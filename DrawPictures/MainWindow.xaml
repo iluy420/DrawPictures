@@ -5,8 +5,74 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DrawPictures"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Draw pictures" 
+        MinHeight="600"
+        MinWidth="800"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Closing="WindowClosing">
     <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <!--<Frame x:Name="MainFrame" 
+               NavigationUIVisibility="Hidden"
+               Grid.Row="1"
+               Grid.Column="1"
+               Source="Picture.xaml"
+               Background="Aqua"/>-->
+        
+        <TabControl x:Name="TabControlFrame"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <HeaderedItemsControl Width="60">
+                        <Button Click="Del_Click" 
+                                Content="x"
+                                HorizontalAlignment="Right"/>
+                    </HeaderedItemsControl>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <!--<TabItem x:Name="smartphonesTab">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Click="Del_Click" 
+                                Content="Удалить"/>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>-->
+        </TabControl>
+        
+        <TextBlock x:Name="DateTimeNow"  
+                   Grid.Row="2"
+                   Grid.Column="1"
+                   Margin="0,0,25,0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"/>
+        <StackPanel Grid.Column="0"
+                    Grid.Row="1" >
+            <Button x:Name="ColorDialogButton"
+                    Content="Выбор цвета"
+                    Click="Button_Click"/>
+        
+            <Button x:Name="AddPicture"
+                    Content="Добавить конвас"
+                    Click="AddPictureButton_Click"/>
+        </StackPanel>
+
+        
         
     </Grid>
 </Window>
