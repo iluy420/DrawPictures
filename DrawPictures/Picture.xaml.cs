@@ -17,10 +17,60 @@ namespace DrawPictures
 {
     public partial class Picture : Page
     {
+        public static RoutedCommand MyCommand = new RoutedCommand();
+        public static RoutedCommand MyCommand1 = new RoutedCommand();
+        public System.Windows.Ink.StrokeCollection _added;
+        public System.Windows.Ink.StrokeCollection _removed;
+        private bool handle = true;
         public Picture()
         {
             InitializeComponent();
+            MyCommand.InputGestures.Add(new KeyGesture(Key.Z, ModifierKeys.Control));
+            MyCommand1.InputGestures.Add(new KeyGesture(Key.Y, ModifierKeys.Control));
+            ink.Strokes.StrokesChanged += Strokes_StrokesChanged;
         }
+        private void Strokes_StrokesChanged(object sender, System.Windows.Ink.StrokeCollectionChangedEventArgs e)
+        {
+            //if (handle)
+            //{
+            //    if(_added != null)
+            //    {
+            //        _added.Add(e.Added);
+            //    }
+            //    else
+            //    {
+                    _added = e.Added;
+                    _removed = e.Removed;
+                //}
+                
+
+            //}
+        }
+        private void Undo_Click(object sender, RoutedEventArgs e)
+        {
+            if (ink.Strokes.Count > 0)
+            {
+                //_removed.Add(ink.Strokes[ink.Strokes.Count - 1]);
+                ink.Strokes.RemoveAt(ink.Strokes.Count - 1);
+                
+            }
+        }
+
+        //private void Undo(object sender, RoutedEventArgs e)
+        //{
+        //    handle = false;
+        //    ink.Strokes.Remove(_added);
+        //    ink.Strokes.Add(_removed);
+        //    handle = true;
+        //}
+
+        //private void Redo(object sender, RoutedEventArgs e)
+        //{
+        //    handle = false;
+        //    ink.Strokes.Add(_added);
+        //    ink.Strokes.Remove(_removed);
+        //    handle = true;
+        //}
         public InkCanvas Convas_Return()
         {
             return ink;

@@ -7,7 +7,12 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Picture">
-
+    <Page.CommandBindings>
+        <CommandBinding Command="{x:Static local:Picture.MyCommand}" 
+                        Executed="Undo_Click"/>
+        <!--<CommandBinding Command="{x:Static local:Picture.MyCommand1}" 
+                        Executed="Redo"/>-->
+    </Page.CommandBindings>
     <Grid>
         <Grid.ContextMenu>
             <ContextMenu>
