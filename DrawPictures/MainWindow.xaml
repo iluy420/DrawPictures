@@ -18,41 +18,32 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
-        <!--<Frame x:Name="MainFrame" 
-               NavigationUIVisibility="Hidden"
-               Grid.Row="1"
-               Grid.Column="1"
-               Source="Picture.xaml"
-               Background="Aqua"/>-->
-        
+
         <TabControl x:Name="TabControlFrame"
                     Grid.Row="1"
                     Grid.Column="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top">
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
             <TabControl.ItemTemplate>
                 <DataTemplate>
-                    <HeaderedItemsControl Width="60">
-                        <Button Click="Del_Click" 
-                                Content="x"
-                                HorizontalAlignment="Right"/>
-                    </HeaderedItemsControl>
+                    <DockPanel>
+                        <Button Name="btnDelete" 
+                                DockPanel.Dock="Right" 
+                                Margin="5,0,0,0" 
+                                Padding="0" 
+                                Click="Del_Click">
+                                <Image Source="/Images/delete.png" 
+                                       Height="25" 
+                                       Width="25"/>
+                        </Button>
+                    </DockPanel>
                 </DataTemplate>
             </TabControl.ItemTemplate>
-            <!--<TabItem x:Name="smartphonesTab">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <Button Click="Del_Click" 
-                                Content="Удалить"/>
-                    </StackPanel>
-                </TabItem.Header>
-            </TabItem>-->
         </TabControl>
         
         <TextBlock x:Name="DateTimeNow"  
@@ -66,12 +57,27 @@
             <Button x:Name="ColorDialogButton"
                     Content="Выбор цвета"
                     Click="Button_Click"/>
-        
+
             <Button x:Name="AddPicture"
                     Content="Добавить конвас"
                     Click="AddPictureButton_Click"/>
-        </StackPanel>
+            <Slider x:Name="PenSize" 
+                    Value="0" 
+                    Minimum="1" 
+                    Maximum="20" 
+                    SelectionStart="1" 
+                    Height="30" 
+                    VerticalContentAlignment="Center"
+                    IsSelectionRangeEnabled="True" 
+                    ValueChanged="Slider_ValueChanged" />
+                
 
+        </StackPanel>
+        
+        
+        
+        
+        
         
         
     </Grid>

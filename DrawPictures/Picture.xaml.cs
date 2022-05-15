@@ -26,5 +26,12 @@ namespace DrawPictures
             return ink;
         }
 
+        private void PasteMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Image image = new Image();
+            image.Source = new BitmapImage(new Uri("Images/delete.png", UriKind.Relative));
+
+            ink.Children.Add(image);
+        }
     }
 }

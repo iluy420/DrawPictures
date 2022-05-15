@@ -81,6 +81,7 @@ namespace DrawPictures
             //}
         }
 
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
@@ -99,10 +100,20 @@ namespace DrawPictures
             TabControlFrame.Items.Add(newframe);
             TabControlFrame.SelectedIndex = TabControlFrame.Items.Count-1; 
         }
-
         private void Del_Click(object sender, RoutedEventArgs e)
         {
-            TabControlFrame.Items.Remove(TabControlFrame.SelectedContent);
+            TabControlFrame.Items.Remove(TabControlFrame);
+        }
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ((Slider)sender).SelectionEnd = e.NewValue;
+            Frame currentFrame = (Frame)TabControlFrame.SelectedContent;
+            if(currentFrame != null) {
+                Picture picture = (Picture)currentFrame.Content;
+                picture.Convas_Return().DefaultDrawingAttributes.Height = e.NewValue;
+                picture.Convas_Return().DefaultDrawingAttributes.Width = e.NewValue;
+            }
+            
         }
     }
 }

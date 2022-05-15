@@ -9,13 +9,21 @@
       Title="Picture">
 
     <Grid>
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Копировать"/>
+                <MenuItem Header="Вставить"
+                          Click="PasteMenuItem_Click"/>
+                <MenuItem Header="Вырезать"/>
+                <MenuItem Header="Удалить"/>
+            </ContextMenu>
+        </Grid.ContextMenu>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" 
                       VerticalScrollBarVisibility="Auto">
 
             <InkCanvas Background="Aqua"
                        IsManipulationEnabled="True"
-                       x:Name="ink"
-                       >
+                       x:Name="ink">
                 <!--PreviewTouchDown="ink_PreviewTouchDown"  
                        PreviewTouchUp="ink_PreviewTouchUp"                    
                        RenderTransform="{Binding ImageTransform}"-->
