@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace DrawPictures.ViewsModels.Base
+namespace DrawPictures.ViewModels.Base
 {
     internal abstract class ViewModelBase : INotifyPropertyChanged 
     {

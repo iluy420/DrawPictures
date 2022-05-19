@@ -55,7 +55,7 @@ namespace DrawPictures
             {
                 int gg = ink.Strokes.Count - 1;
                 Stroke strokes = ink.Strokes[gg].Clone();
-                _removed.Add(strokes);
+                //_removed.Add(strokes);
                 ink.Strokes.RemoveAt(ink.Strokes.Count - 1);
             }
         }
