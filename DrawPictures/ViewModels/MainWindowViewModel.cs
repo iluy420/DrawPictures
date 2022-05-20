@@ -33,6 +33,7 @@ namespace DrawPictures.ViewModels
         }
 
         #endregion
+
         //#region Дата и время
 
         //private string _Title = "Draw pictures";
