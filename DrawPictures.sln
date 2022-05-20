@@ -5,6 +5,10 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawPictures", "DrawPictures\DrawPictures.csproj", "{AB7FE534-B31C-49EB-B1E3-1D4159DD863D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A1CD56AC-FB7D-4B78-BC70-10B157EB4E92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLibrary", "Tests\TestLibrary\TestLibrary.csproj", "{BC6D8CA6-7954-4AF3-8CFE-4D7A597CF114}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{AB7FE534-B31C-49EB-B1E3-1D4159DD863D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB7FE534-B31C-49EB-B1E3-1D4159DD863D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB7FE534-B31C-49EB-B1E3-1D4159DD863D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC6D8CA6-7954-4AF3-8CFE-4D7A597CF114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC6D8CA6-7954-4AF3-8CFE-4D7A597CF114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC6D8CA6-7954-4AF3-8CFE-4D7A597CF114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC6D8CA6-7954-4AF3-8CFE-4D7A597CF114}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BC6D8CA6-7954-4AF3-8CFE-4D7A597CF114} = {A1CD56AC-FB7D-4B78-BC70-10B157EB4E92}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B048F158-7592-4A3C-93EA-2291FC3AE51B}
