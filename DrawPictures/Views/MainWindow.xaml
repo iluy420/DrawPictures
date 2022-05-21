@@ -5,17 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DrawPictures"
         xmlns:vm ="clr-namespace:DrawPictures.ViewModels"
+        xmlns:cmd ="clr-namespace:DrawPictures.Infrastructure.Commands"
+        xmlns:fa ="http://schemas.fontawesome.com/icons/"
         mc:Ignorable="d"
-        Title="{Binding Path=Title,
-                UpdateSourceTrigger=PropertyChanged}" 
+        Title="{Binding Title}" 
         MinHeight="600"
         MinWidth="800"
         WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
         Closing="WindowClosing">
+    <!--UpdateSourceTrigger=PropertyChanged-->
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+    <!--<Window.Resources>
+        <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
+
+    </Window.Resources>-->
     <Grid>
         
         <Grid.RowDefinitions>
@@ -25,17 +31,47 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TabControl x:Name="TabControlFrame"
+
+        <TabControl Grid.Column="1"
+                    Grid.Row="1"
+                    x:Name="TabControlFrame">
+            
+
+        </TabControl>
+        <!--<TabControl x:Name="TabControlFrame"
+                    
                     Grid.Row="1"
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch">
-            <TabControl.ItemTemplate>
+            --><!--ItemsSource="{Binding Tabs}"--><!--
+            <TabControl.ContentTemplate>
                 <DataTemplate>
+                    
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+            <TabControl.ItemTemplate>
+                
+                <DataTemplate>
+                    <HeaderedContentControl>
+                        <DockPanel>
+                            <Button Name="btnDelete" 
+                                    DockPanel.Dock="Right" 
+                                    Margin="5,0,0,0" 
+                                    Padding="0">
+                                <Image Source="/Images/delete.png" 
+                                       Height="25" 
+                                       Width="25"/>
+                            </Button>
+                        </DockPanel>
+                    </HeaderedContentControl>
+
+                </DataTemplate>
+                --><!--<DataTemplate>
                     <DockPanel>
                         <Button Name="btnDelete" 
                                 DockPanel.Dock="Right" 
@@ -47,25 +83,39 @@
                                        Width="25"/>
                         </Button>
                     </DockPanel>
-                </DataTemplate>
+                </DataTemplate>--><!--
             </TabControl.ItemTemplate>
-        </TabControl>
+        </TabControl>-->
         
+
+
         <TextBlock x:Name="DateTimeNow"
                    Grid.Row="2"
                    Grid.Column="1"
                    Margin="0,0,25,0"
                    VerticalAlignment="Center"
-                   HorizontalAlignment="Right"/>
+                   HorizontalAlignment="Right"
+                   Text="{Binding CurrentDataTime}"/>
+
+
+
+
         <StackPanel Grid.Column="0"
                     Grid.Row="1" >
             <Button x:Name="ColorDialogButton"
-                    Content="Выбор цвета"
-                    Click="Button_Click"/>
+                    Command="{Binding ColorSelectionCommand}">
+                <DockPanel>
+                    <fa:ImageAwesome Icon="Solid_Palette"
+                                     Height="25">
+                    </fa:ImageAwesome>
+                    <TextBlock Text="Выбор цвета"
+                               Margin="10,0,0,0"/>
+                </DockPanel>
+            </Button>
 
             <Button x:Name="AddPicture"
                     Content="Добавить конвас"
-                    Click="AddPictureButton_Click"/>
+                    Command="{Binding AddTabCommand}"/>
             <Slider x:Name="PenSize" 
                     Value="0" 
                     Minimum="1" 

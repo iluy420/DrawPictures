@@ -5,17 +5,17 @@ namespace DrawPictures.Infrastructure.Commands
 {
     internal class LambdaCommand:CommandBase
     {
-        private readonly Action<object> _execute;
-        private readonly Func<object, bool> _canExecute;
+        private readonly Action<object> _Execute;
+        private readonly Func<object, bool> _CanExecute;
 
-        public LambdaCommand(Action<object> execute, Func<object,bool> canExecute = null)
+        public LambdaCommand(Action<object> Execute, Func<object,bool> CanExecute = null)
         {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            _canExecute = CanExecute;
+            _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
+            _CanExecute = CanExecute;
         }
 
-        public override bool CanExecute(object parameter) => _canExecute?.Invoke(parameter) ?? true;
+        public override bool CanExecute(object parameter) => _CanExecute?.Invoke(parameter) ?? true;
 
-        public override void Execute(object parameter) => _execute(parameter);
+        public override void Execute(object parameter) => _Execute(parameter);
     }
 }

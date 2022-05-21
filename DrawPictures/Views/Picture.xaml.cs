@@ -37,64 +37,64 @@ namespace DrawPictures
         //    if (_removed == null)
         //    {
         //        _removed = e.Removed;
-                
+
         //    }
         //    else
         //    {
         //        _removed.Add(e.Removed);
         //    }
-               
-        //    //}
-
 
         //    //}
+
+
+        //    //}
         //}
-        private void Undo_Click(object sender, RoutedEventArgs e)
-        {
-            if (ink.Strokes.Count > 0)
-            {
-                int gg = ink.Strokes.Count - 1;
-                Stroke strokes = ink.Strokes[gg].Clone();
-                //_removed.Add(strokes);
-                ink.Strokes.RemoveAt(ink.Strokes.Count - 1);
-            }
-        }
-        private void Redo_Click(object sender, RoutedEventArgs e)
-        {
-            if (ink.Strokes.Count > 0)
-            {
-                _removed.Add(ink.Strokes[ink.Strokes.Count - 1]);
-                ink.Strokes.Add(_removed);
-
-            }
-        }
-
-        //private void Undo(object sender, RoutedEventArgs e)
+        //private void Undo_Click(object sender, RoutedEventArgs e)
         //{
-        //    handle = false;
-        //    ink.Strokes.Remove(_added);
-        //    ink.Strokes.Add(_removed);
-        //    handle = true;
+        //    if (ink.Strokes.Count > 0)
+        //    {
+        //        int gg = ink.Strokes.Count - 1;
+        //        Stroke strokes = ink.Strokes[gg].Clone();
+        //        //_removed.Add(strokes);
+        //        ink.Strokes.RemoveAt(ink.Strokes.Count - 1);
+        //    }
+        //}
+        //private void Redo_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (ink.Strokes.Count > 0)
+        //    {
+        //        _removed.Add(ink.Strokes[ink.Strokes.Count - 1]);
+        //        ink.Strokes.Add(_removed);
+
+        //    }
         //}
 
-        //private void Redo(object sender, RoutedEventArgs e)
-        //{
-        //    handle = false;
-        //    ink.Strokes.Add(_added);
-        //    ink.Strokes.Remove(_removed);
-        //    handle = true;
-        //}
-        public InkCanvas Convas_Return()
+        private void Undo(object sender, RoutedEventArgs e)
         {
-            return ink;
+            //handle = false;
+            //ink.Strokes.Remove(_added);
+            //ink.Strokes.Add(_removed);
+            //handle = true;
         }
+
+        private void Redo(object sender, RoutedEventArgs e)
+        {
+            //handle = false;
+            //ink.Strokes.Add(_added);
+            //ink.Strokes.Remove(_removed);
+            //handle = true;
+        }
+        //public InkCanvas Convas_Return()
+        //{
+        //    return ink;
+        //}
 
         private void PasteMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Image image = new Image();
-            image.Source = new BitmapImage(new Uri("Images/delete.png", UriKind.Relative));
+            //Image image = new Image();
+            //image.Source = new BitmapImage(new Uri("Images/delete.png", UriKind.Relative));
 
-            ink.Children.Add(image);
+            //ink.Children.Add(image);
         }
     }
 }

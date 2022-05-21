@@ -22,14 +22,10 @@ namespace DrawPictures
         public MainWindow()
         {
             InitializeComponent();
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += TimerTick;
-            timer.Start();
 
-            Frame newframe = new Frame();
-            newframe.Content = new Picture();
-            TabControlFrame.Items.Add(newframe);
+            //Frame newframe = new Frame();
+            //newframe.Content = new Picture();
+            //TabControlFrame.Items.Add(newframe);
         }
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -37,10 +33,6 @@ namespace DrawPictures
             {
                 e.Cancel = true;
             }
-        }
-        private void TimerTick(object sender, EventArgs e)
-        {
-            DateTimeNow.Text = DateTime.Now.ToString("dd MMMM yyyy HH:mm:ss");
         }
 
         private void MainFrame_OnNavigeted(object sender, NavigationEventArgs e)
@@ -82,24 +74,24 @@ namespace DrawPictures
         }
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ColorDialog colorDialog = new ColorDialog();
-            if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Frame currentFrame = (Frame)TabControlFrame.SelectedContent;
-                Picture picture = (Picture)currentFrame.Content;
-                picture.Convas_Return().DefaultDrawingAttributes.Color = Color.FromArgb(colorDialog.Color.A,
-                colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
-            }
-        }
-        private void AddPictureButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame newframe = new Frame();
-            newframe.Content = new Picture();
-            TabControlFrame.Items.Add(newframe);
-            TabControlFrame.SelectedIndex = TabControlFrame.Items.Count-1; 
-        }
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ColorDialog colorDialog = new ColorDialog();
+        //    if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        //    {
+        //        Frame currentFrame = (Frame)TabControlFrame.SelectedContent;
+        //        Picture picture = (Picture)currentFrame.Content;
+        //        picture.Convas_Return().DefaultDrawingAttributes.Color = Color.FromArgb(colorDialog.Color.A,
+        //        colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
+        //    }
+        //}
+        //private void AddPictureButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Frame newframe = new Frame();
+        //    newframe.Content = new Picture();
+        //    TabControlFrame.Items.Add(newframe);
+        //    TabControlFrame.SelectedIndex = TabControlFrame.Items.Count-1; 
+        //}
         private void Del_Click(object sender, RoutedEventArgs e)
         {
             TabControlFrame.Items.Remove(TabControlFrame);
@@ -108,11 +100,11 @@ namespace DrawPictures
         {
             ((Slider)sender).SelectionEnd = e.NewValue;
             Frame currentFrame = (Frame)TabControlFrame.SelectedContent;
-            if(currentFrame != null) {
-                Picture picture = (Picture)currentFrame.Content;
-                picture.Convas_Return().DefaultDrawingAttributes.Height = e.NewValue;
-                picture.Convas_Return().DefaultDrawingAttributes.Width = e.NewValue;
-            }
+            //if(currentFrame != null) {
+            //    Picture picture = (Picture)currentFrame.Content;
+            //    picture.Convas_Return().DefaultDrawingAttributes.Height = e.NewValue;
+            //    picture.Convas_Return().DefaultDrawingAttributes.Width = e.NewValue;
+            //}
             
         }
     }
