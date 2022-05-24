@@ -122,23 +122,14 @@ namespace DrawPictures.ViewModels
 
         private void OnDelTabCommandExecute(object p)
         {
-            //string tabName = (p as System.Windows.Controls.Button).CommandParameter.ToString();
-            //var item = Tabs.Cast<TabItem>().Where(i => i.Name.Equals(tabName)).SingleOrDefault();
             try
             {
-                _Tabs.Remove(Tabs[0]);
+                _Tabs.Remove((TabItem)p);
             }
             catch
             {
                 MessageBox.Show("вкладки закончились! успокойся уже!");
             }
-            
-
-            //Tabs.Remove(Tabs[0]);
-
-            //var item =  Tabs.RemoveAt(Tabs.IndexOf())  .Remove(Tabs.)    tabDynamic.Items.Cast<tabitem>().Where(i => i.Name.Equals(tabName)).SingleOrDefault();
-
-            //TabItem tab = item as TabItem;
         }
 
         private bool CanDelTabCommandExecuted(object p) => true;
