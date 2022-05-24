@@ -124,8 +124,15 @@ namespace DrawPictures.ViewModels
         {
             //string tabName = (p as System.Windows.Controls.Button).CommandParameter.ToString();
             //var item = Tabs.Cast<TabItem>().Where(i => i.Name.Equals(tabName)).SingleOrDefault();
+            try
+            {
+                _Tabs.Remove(Tabs[0]);
+            }
+            catch
+            {
+                MessageBox.Show("вкладки закончились! успокойся уже!");
+            }
             
-            _Tabs.Remove(Tabs[0]);
 
             //Tabs.Remove(Tabs[0]);
 
