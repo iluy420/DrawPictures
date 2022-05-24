@@ -76,9 +76,6 @@
                    HorizontalAlignment="Right"
                    Text="{Binding CurrentDataTime}"/>
 
-
-
-
         <StackPanel Grid.Column="0"
                     Grid.Row="1" >
             <Button x:Name="ColorDialogButton"
@@ -96,24 +93,18 @@
                     Content="Добавить конвас"
                     Command="{Binding AddTabCommand}"/>
             <DockPanel>
-                <Slider x:Name="PenSize" 
-                        Value="0" 
-                        Minimum="1" 
+                <Slider Minimum="0" 
                         Maximum="20" 
                         Height="30" 
                         Width="155"
                         TickPlacement="Both"
                         TickFrequency="2"
                         IsSelectionRangeEnabled="True" 
-                        VerticalContentAlignment="Center"
-                        ValueChanged="Slider_ValueChanged" />
+                        VerticalContentAlignment="Center"/>
                 <ComboBox>
 
                 </ComboBox>
             </DockPanel>
-            
-
-
         </StackPanel>
 
 
