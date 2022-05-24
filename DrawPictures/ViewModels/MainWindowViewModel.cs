@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
 using DrawPictures.Infrastructure.Commands;
 using DrawPictures.ViewModels.Base;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+using TabItem = System.Windows.Controls.TabItem;
 
 namespace DrawPictures.ViewModels
 {
@@ -49,6 +52,8 @@ namespace DrawPictures.ViewModels
             set => Set(ref _Tabs, value);
         }
         #endregion
+
+
 
         #region TabsCurrent : TabItem - Выбранная вкладка
 
@@ -110,6 +115,28 @@ namespace DrawPictures.ViewModels
         private bool CanAddTabCommandExecuted(object p) => true;
         #endregion
 
+
+
+        #region DelTabCommand - Удаление вкладки
+        public ICommand DelTabCommand { get; }
+
+        private void OnDelTabCommandExecute(object p)
+        {
+            //string tabName = (p as System.Windows.Controls.Button).CommandParameter.ToString();
+            //var item = Tabs.Cast<TabItem>().Where(i => i.Name.Equals(tabName)).SingleOrDefault();
+            
+            _Tabs.Remove(Tabs[0]);
+
+            //Tabs.Remove(Tabs[0]);
+
+            //var item =  Tabs.RemoveAt(Tabs.IndexOf())  .Remove(Tabs.)    tabDynamic.Items.Cast<tabitem>().Where(i => i.Name.Equals(tabName)).SingleOrDefault();
+
+            //TabItem tab = item as TabItem;
+        }
+
+        private bool CanDelTabCommandExecuted(object p) => true;
+        #endregion
+
         #endregion
 
         public MainWindowViewModel()
@@ -119,7 +146,7 @@ namespace DrawPictures.ViewModels
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecute, CanCloseApplicationCommandExecuted);
             ColorSelectionCommand = new LambdaCommand(OnColorSelectionCommandExecute, CanColorSelectionCommandExecuted);
             AddTabCommand = new LambdaCommand(OnAddTabCommandExecute, CanAddTabCommandExecuted);
-
+            DelTabCommand = new LambdaCommand(OnDelTabCommandExecute, CanDelTabCommandExecuted);
             #endregion
 
             #region Инициализация
@@ -136,7 +163,7 @@ namespace DrawPictures.ViewModels
             #endregion
 
             #region Установка первой вкладки
-            Tabs = new ObservableCollection<TabItem> {new TabItem{Content = new Frame {Content = new Picture()}}};
+            _Tabs = new ObservableCollection<TabItem> {new TabItem{Content = new Frame {Content = new Picture()}}};
             #endregion
 
             #endregion

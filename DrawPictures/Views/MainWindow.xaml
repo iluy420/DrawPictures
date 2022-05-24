@@ -18,10 +18,7 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <!--<Window.Resources>
-        <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
 
-    </Window.Resources>-->
     <Grid>
         
         <Grid.RowDefinitions>
@@ -38,56 +35,39 @@
 
         <TabControl Grid.Column="1"
                     Grid.Row="1"
-                    x:Name="TabControlFrame">
-            
+                    ItemsSource="{Binding Tabs}">
+
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="TabItem">
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+
+                            <DataTemplate>
+                                <DockPanel>
+                                    <!--<TextBox>вкладка</TextBox>-->
+
+                                    <Button Name="btnDelete" 
+                                            DockPanel.Dock="Right" 
+                                            Margin="5,0,0,0"
+                                            Command="{Binding DelTabCommand}">
+                                        <Button.DataContext>
+                                            <vm:MainWindowViewModel/>
+                                        </Button.DataContext>
+
+
+                                        <Image Source="/Images/delete.png" 
+                                               Height="25" 
+                                               Width="25"/>
+                                    </Button>
+                                </DockPanel>
+
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.ItemContainerStyle>
 
         </TabControl>
-        <!--<TabControl x:Name="TabControlFrame"
-                    
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch">
-            --><!--ItemsSource="{Binding Tabs}"--><!--
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-            <TabControl.ItemTemplate>
-                
-                <DataTemplate>
-                    <HeaderedContentControl>
-                        <DockPanel>
-                            <Button Name="btnDelete" 
-                                    DockPanel.Dock="Right" 
-                                    Margin="5,0,0,0" 
-                                    Padding="0">
-                                <Image Source="/Images/delete.png" 
-                                       Height="25" 
-                                       Width="25"/>
-                            </Button>
-                        </DockPanel>
-                    </HeaderedContentControl>
-
-                </DataTemplate>
-                --><!--<DataTemplate>
-                    <DockPanel>
-                        <Button Name="btnDelete" 
-                                DockPanel.Dock="Right" 
-                                Margin="5,0,0,0" 
-                                Padding="0" 
-                                Click="Del_Click">
-                                <Image Source="/Images/delete.png" 
-                                       Height="25" 
-                                       Width="25"/>
-                        </Button>
-                    </DockPanel>
-                </DataTemplate>--><!--
-            </TabControl.ItemTemplate>
-        </TabControl>-->
-        
-
 
         <TextBlock x:Name="DateTimeNow"
                    Grid.Row="2"
@@ -103,7 +83,7 @@
         <StackPanel Grid.Column="0"
                     Grid.Row="1" >
             <Button x:Name="ColorDialogButton"
-                    Command="{Binding ColorSelectionCommand}">
+                    Command="{Binding DelTabCommand}">
                 <DockPanel>
                     <fa:ImageAwesome Icon="Solid_Palette"
                                      Height="25">
