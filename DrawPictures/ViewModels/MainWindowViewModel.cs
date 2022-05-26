@@ -10,7 +10,9 @@ using System.Windows.Threading;
 using DrawPictures.Infrastructure.Commands;
 using DrawPictures.ViewModels.Base;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+using Application = System.Windows.Application;
 using Button = System.Windows.Controls.Button;
+using MessageBox = System.Windows.MessageBox;
 using TabItem = System.Windows.Controls.TabItem;
 
 namespace DrawPictures.ViewModels
@@ -69,25 +71,38 @@ namespace DrawPictures.ViewModels
         }
         #endregion
 
-        public void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        #region Методы
+
+        #region Закрытие окна
+
+        public void OnWindowClosing(object sender, CancelEventArgs e)
         {
-            if (System.Windows.MessageBox.Show("Вы уверены?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+            if (MessageBox.Show("Вы уверены?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
             {
                 e.Cancel = true;
             }
         }
 
+        #endregion
+
+
+        #endregion
+
         #region Команды
 
         #region CloseApplicationCommand - Закрытие окна
-        public ICommand CloseApplicationCommand { get; }
 
-        private void OnCloseApplicationCommandExecute(object p)
-        {
-            System.Windows.Application.Current.Shutdown();
-        }
-        
-        private bool CanCloseApplicationCommandExecuted(object p) => true;
+        //public ICommand CloseApplicationCommand { get; }
+
+        //private void OnCloseApplicationCommandExecute(object p)
+        //{
+        //    if (System.Windows.MessageBox.Show("Вы уверены?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+        //    {
+        //        System.Windows.Application.Current.Shutdown();
+        //    }
+        //}
+
+        //private bool CanCloseApplicationCommandExecuted(object p) => true;
 
         #endregion
 
@@ -147,10 +162,12 @@ namespace DrawPictures.ViewModels
         {
             #region Команды
 
-            CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecute, CanCloseApplicationCommandExecuted);
+            //CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecute, CanCloseApplicationCommandExecuted);
             ColorSelectionCommand = new LambdaCommand(OnColorSelectionCommandExecute, CanColorSelectionCommandExecuted);
             AddTabCommand = new LambdaCommand(OnAddTabCommandExecute, CanAddTabCommandExecuted);
             DelTabCommand = new LambdaCommand(OnDelTabCommandExecute, CanDelTabCommandExecuted);
+
+
             #endregion
 
             #region Инициализация
@@ -174,66 +191,13 @@ namespace DrawPictures.ViewModels
             }};
             #endregion
 
+            #region Привязка события закрытия приложения
+
+            Application.Current.MainWindow.Closing += new CancelEventHandler(OnWindowClosing);
+
+            #endregion
+
             #endregion
         }
-
-
-        //void CloseWindow()
-        //{
-        //    Close?.Invoke();
-        //}
-        //public Action Close { get; set; }
-
-        //public bool CanClose()
-        //{
-        //    return false;
-        //}
     }
-
-    //interface ICloseWindows
-    //{
-    //    Action Close { get; set; }
-    //    bool CanClose();
-
-    //}
-
-    //public class WindowCloser
-    //{
-    //    public static bool GetEnableWindowClosing(DependencyObject obj)
-    //    {
-    //        return (bool)obj.GetValue(EnableWindowClosingProperty);
-    //    }
-
-    //    public static void SetEnableWindowClosing(DependencyObject obj, bool value)
-    //    {
-    //        obj.SetValue(EnableWindowClosingProperty,value);
-    //    }
-
-        
-    //}
-    //public static readonly DependencyProperty EnableWindowClosingProperty =
-    //    DependencyProperty.RegisterAttached("EnableWindowClosing", typeof(bool), typeof(WindowCloser),
-    //        new PropertyMetadata(false, OnEnableWindowClosingChenged));
-
-    //private static void OnEnableWindowClosingChenged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    //{
-    //    if (d is Window window)
-    //    {
-    //        window.Loaded += (s, e) =>
-    //        {
-    //            if (window.DataContext is ICloseWindows vm)
-    //            {
-    //                vm.Close += () =>
-    //                {
-    //                    window.Close();
-    //                };
-    //                window.Closing += (s, e) =>
-    //                {
-    //                    e.Cancel = !vm.CanClose();
-    //                };
-
-    //            }
-    //        };
-    //    }
-    //}
 }

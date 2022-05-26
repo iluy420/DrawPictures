@@ -13,16 +13,16 @@
         MinWidth="800"
         WindowState="Maximized"
         WindowStartupLocation="CenterScreen">
+
     <!--UpdateSourceTrigger=PropertyChanged-->
-    
-    <!--<Window.Closing>
-        
-    </Window.Closing>-->
+
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+
     <Window.InputBindings>
-        <KeyBinding Modifiers="Alt" Key="F4" Command="{Binding CloseApplicationCommand}"/>
+        <KeyBinding Modifiers="Alt" Key="F4" 
+                    Command="{Binding ElementName=window.Closing}"/>
     </Window.InputBindings>
 
     <Grid>

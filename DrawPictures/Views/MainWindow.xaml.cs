@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Windows.Forms;
 using DrawPictures.ViewModels;
+using DrawPictures.Infrastructure.Commands;
 
 namespace DrawPictures
 {
@@ -23,18 +25,7 @@ namespace DrawPictures
         public MainWindow()
         {
             InitializeComponent();
-            //Frame newframe = new Frame();
-            //newframe.Content = new Picture();
-            //TabControlFrame.Items.Add(newframe);
         }
-        //private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    if (System.Windows.MessageBox.Show("Вы уверены?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
-        //    {
-        //        e.Cancel = true;
-        //    }
-        //}
-
         private void MainFrame_OnNavigeted(object sender, NavigationEventArgs e)
         {
             //if (!(e.Content is Page page)) return;
