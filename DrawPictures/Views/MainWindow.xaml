@@ -39,7 +39,15 @@
 
         <TabControl Grid.Column="1"
                     Grid.Row="1"
-                    ItemsSource="{Binding Tabs}">
+                    ItemsSource="{Binding Tabs}"
+                    SelectedItem="{Binding TabsCurrent}"
+                    >
+            <!--<TabControl.Triggers>
+                <EventTrigger >
+
+                </EventTrigger>
+            </TabControl.Triggers>-->
+            <!--"{Binding Path=SelectedItem.Value, ElementName=MyTabControl}"-->
             <!--TargetNullValue-->
             <TabControl.ItemContainerStyle>
                 <Style TargetType="TabItem">

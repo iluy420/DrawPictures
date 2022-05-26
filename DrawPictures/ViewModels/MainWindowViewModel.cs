@@ -69,7 +69,7 @@ namespace DrawPictures.ViewModels
             get => _TabsCurrent;
             set => Set(ref _TabsCurrent, value);
         }
-#endregion
+        #endregion
 
         #endregion
 
@@ -87,6 +87,15 @@ namespace DrawPictures.ViewModels
 
         #endregion
 
+
+        #endregion
+
+        #region Выбор элемента
+
+        //public void select(object sender, CancelEventArgs e)
+        //{
+        //    TabsCurrent = (TabItem)sender;
+        //}
 
         #endregion
 
@@ -116,7 +125,8 @@ namespace DrawPictures.ViewModels
             ColorDialog colorDialog = new ColorDialog();
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                //Frame currentFrame = (Frame)TabControlFrame.SelectedContent;
+                
+                //Frame currentFrame = (Frame)c;
                 //Picture picture = (Picture)currentFrame.Content;
                 //picture.Convas_Return().DefaultDrawingAttributes.Color = Color.FromArgb(colorDialog.Color.A,
                 //    colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
