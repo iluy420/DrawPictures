@@ -20,10 +20,10 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
 
-    <Window.InputBindings>
+    <!--<Window.InputBindings>
         <KeyBinding Modifiers="Alt" Key="F4" 
                     Command="{Binding ElementName=window.Closing}"/>
-    </Window.InputBindings>
+    </Window.InputBindings>-->
 
     <Grid>
 

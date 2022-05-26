@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -9,16 +8,19 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using DrawPictures.Infrastructure.Commands;
 using DrawPictures.ViewModels.Base;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 using Application = System.Windows.Application;
-using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
 using TabItem = System.Windows.Controls.TabItem;
+using DialogResult = System.Windows.Forms.DialogResult;
+
+
 
 namespace DrawPictures.ViewModels
 {
     internal class MainWindowViewModel:ViewModelBase
     {
+        #region Свойства
+
         #region Title : string - Заголовок окна
 
         /// <summary>Заголовок окна</summary>
@@ -69,6 +71,8 @@ namespace DrawPictures.ViewModels
             get => _TabsCurrent;
             set => Set(ref _TabsCurrent, value);
         }
+#endregion
+
         #endregion
 
         #region Методы
@@ -112,7 +116,7 @@ namespace DrawPictures.ViewModels
         private void OnColorSelectionCommandExecute(object p)
         {
             ColorDialog colorDialog = new ColorDialog();
-            if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 //Frame currentFrame = (Frame)TabControlFrame.SelectedContent;
                 //Picture picture = (Picture)currentFrame.Content;
@@ -170,8 +174,6 @@ namespace DrawPictures.ViewModels
 
             #endregion
 
-            #region Инициализация
-
             #region Установка даты и времени
 
             DispatcherTimer _DateTimeNow = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
@@ -197,7 +199,6 @@ namespace DrawPictures.ViewModels
 
             #endregion
 
-            #endregion
         }
     }
 }
