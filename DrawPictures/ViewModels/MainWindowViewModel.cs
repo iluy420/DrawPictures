@@ -13,8 +13,6 @@ using MessageBox = System.Windows.MessageBox;
 using TabItem = System.Windows.Controls.TabItem;
 using DialogResult = System.Windows.Forms.DialogResult;
 
-
-
 namespace DrawPictures.ViewModels
 {
     internal class MainWindowViewModel:ViewModelBase
@@ -195,7 +193,8 @@ namespace DrawPictures.ViewModels
 
             #region Привязка события закрытия приложения
 
-            Application.Current.MainWindow.Closing += new CancelEventHandler(OnWindowClosing);
+            if (Application.Current.MainWindow != null)
+                Application.Current.MainWindow.Closing += new CancelEventHandler(OnWindowClosing);
 
             #endregion
 

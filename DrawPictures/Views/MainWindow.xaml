@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DrawPictures"
         xmlns:vm ="clr-namespace:DrawPictures.ViewModels"
-        xmlns:cmd ="clr-namespace:DrawPictures.Infrastructure.Commands"
         xmlns:fa ="http://schemas.fontawesome.com/icons/"
         mc:Ignorable="d"
         Title="{Binding Title}" 
@@ -22,7 +20,7 @@
 
     <!--<Window.InputBindings>
         <KeyBinding Modifiers="Alt" Key="F4" 
-                    Command="{Binding ElementName=window.Closing}"/>
+                    Command="{Binding AddTabCommand}"/>
     </Window.InputBindings>-->
 
     <Grid>
@@ -112,12 +110,6 @@
                 </ComboBox>
             </DockPanel>
         </StackPanel>
-
-
-
-
-
-
 
     </Grid>
 </Window>
