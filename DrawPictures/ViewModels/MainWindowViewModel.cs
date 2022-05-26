@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -8,6 +10,7 @@ using System.Windows.Threading;
 using DrawPictures.Infrastructure.Commands;
 using DrawPictures.ViewModels.Base;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+using Button = System.Windows.Controls.Button;
 using TabItem = System.Windows.Controls.TabItem;
 
 namespace DrawPictures.ViewModels
@@ -53,8 +56,6 @@ namespace DrawPictures.ViewModels
         }
         #endregion
 
-
-
         #region TabsCurrent : TabItem - Выбранная вкладка
 
         /// <summary>Выбранная вкладка</summary>
@@ -67,7 +68,14 @@ namespace DrawPictures.ViewModels
             set => Set(ref _TabsCurrent, value);
         }
         #endregion
-        
+
+        public void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (System.Windows.MessageBox.Show("Вы уверены?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+            {
+                e.Cancel = true;
+            }
+        }
 
         #region Команды
 
@@ -115,8 +123,6 @@ namespace DrawPictures.ViewModels
         private bool CanAddTabCommandExecuted(object p) => true;
         #endregion
 
-
-
         #region DelTabCommand - Удаление вкладки
         public ICommand DelTabCommand { get; }
 
@@ -128,7 +134,7 @@ namespace DrawPictures.ViewModels
             }
             catch
             {
-                MessageBox.Show("вкладки закончились! успокойся уже!");
+                System.Windows.MessageBox.Show("вкладки закончились! успокойся уже!");
             }
         }
 
@@ -161,7 +167,11 @@ namespace DrawPictures.ViewModels
             #endregion
 
             #region Установка первой вкладки
-            _Tabs = new ObservableCollection<TabItem> {new TabItem{Content = new Frame {Content = new Picture()}}};
+            _Tabs = new ObservableCollection<TabItem> {new TabItem
+            {
+                Header = "gg"
+                ,Content = "Добавить кладку"
+            }};
             #endregion
 
             #endregion
