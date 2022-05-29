@@ -12,6 +12,8 @@ using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 using TabItem = System.Windows.Controls.TabItem;
 using DialogResult = System.Windows.Forms.DialogResult;
+using static DrawPictures.ViewModels.PictureViewModel;
+using System.Windows.Ink;
 
 namespace DrawPictures.ViewModels
 {
@@ -75,7 +77,7 @@ namespace DrawPictures.ViewModels
 
         #region Методы
 
-        #region Закрытие окна
+        #region OnWindowClosing - При закрытии окна
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
@@ -87,35 +89,99 @@ namespace DrawPictures.ViewModels
 
         #endregion
 
+        #region drawingAttributes : DrawingAttributes - Перо
 
-        #endregion
+        /// <summary>Перо</summary>
+        private double _drawingAttributes;
 
-        #region Выбор элемента
-
-        //public void select(object sender, CancelEventArgs e)
-        //{
-        //    TabsCurrent = (TabItem)sender;
-        //}
-
-        #endregion
-
-        #region Команды
-
-        #region CloseApplicationCommand - Закрытие окна
-
-        public ICommand CloseApplicationCommand { get; }
-
-        private void OnCloseApplicationCommandExecute(object p)
+        /// <summary>Перо</summary>
+        public double drawingAttributes
         {
-            if (System.Windows.MessageBox.Show("Вы уверены?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            get => _drawingAttributes;
+            set
             {
-                System.Windows.Application.Current.Shutdown();
+                Set(ref _drawingAttributes, value);
+                //запись значения пера
+            }
+
+        }
+        #endregion
+        #endregion
+
+
+        public void OndrawingAttributesChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            foreach (var tab in _Tabs)
+            {
+                if (tab.IsSelected)
+                {
+                    if (tab.Content is Frame)
+                    {
+                        Frame currentFrame = (Frame)tab.Content;
+                        Picture picture = (Picture)currentFrame.Content;
+                        PictureViewModel vm = (PictureViewModel)picture.DataContext;
+                        vm.drawingAttributes.Width = _drawingAttributes;
+                        vm.drawingAttributes.Height = _drawingAttributes;
+                    }
+                }
+
+
+
             }
         }
+        
+        #region OnSelectionTabChanged - При выборе элемента
+        public void OnSelectionTabChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (var tab in _Tabs)
+            {
+                if (tab.IsSelected)
+                    gg(tab);
 
-        private bool CanCloseApplicationCommandExecuted(object p) => true;
+
+            }
+        }
+        private void gg(TabItem tab)
+        {
+            if (tab.Content is Frame)
+            {
+                Frame currentFrame = (Frame)tab.Content;
+                Picture picture = (Picture)currentFrame.Content;
+                PictureViewModel vm = (PictureViewModel)picture.DataContext;
+                _drawingAttributes = vm.drawingAttributes.Width;
+            }
+            
+            //picture.Convas_Return().DefaultDrawingAttributes.Color = Color.FromArgb(colorDialog.Color.A,
+            //colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
+        }
 
         #endregion
+        //#region SelectionTabChanged - выбор  вкладки
+        //public ICommand SelectionTabChanged { get; }
+
+        //private void OnSelectionTabChanged(object p)
+        //{
+        //    foreach (var tab in _Tabs)
+        //    {
+        //        if (tab.IsSelected)
+        //            gg(tab);
+
+
+        //    }
+        //}
+
+        //private bool CanSelectionTabChangedExecuted(object p) => true;
+
+
+        //private void gg(TabItem tab)
+        //{
+        //    Picture picture = (Picture)tab.Content;
+        //    //picture.Convas_Return().DefaultDrawingAttributes.Color = Color.FromArgb(colorDialog.Color.A,
+        //    //colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
+        //}
+        //#endregion
+
+        #region Команды
 
         #region ColorSelectionCommand - Выбор цвета
         public ICommand ColorSelectionCommand { get; }
@@ -143,7 +209,6 @@ namespace DrawPictures.ViewModels
         private void OnAddTabCommandExecute(object p)
         {
             _Tabs.Add(new TabItem { Content = new Frame { Content = new Picture() }});
-            _Tabs[_Tabs.Count - 1].IsSelected = true;
             TabsCurrent = _Tabs[_Tabs.Count - 1];
         }
 
@@ -174,11 +239,10 @@ namespace DrawPictures.ViewModels
         {
             #region Команды
 
-            CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecute, CanCloseApplicationCommandExecuted);
             ColorSelectionCommand = new LambdaCommand(OnColorSelectionCommandExecute, CanColorSelectionCommandExecuted);
             AddTabCommand = new LambdaCommand(OnAddTabCommandExecute, CanAddTabCommandExecuted);
             DelTabCommand = new LambdaCommand(OnDelTabCommandExecute, CanDelTabCommandExecuted);
-
+            //SelectionTabChanged = new LambdaCommand(OnSelectionTabChanged, CanSelectionTabChangedExecuted);
 
             #endregion
 
@@ -200,13 +264,6 @@ namespace DrawPictures.ViewModels
                 ,Content = "Добавить кладку"
             }};
             #endregion
-
-            //#region Привязка события закрытия приложения
-
-            //if (Application.Current.MainWindow != null)
-            //    Application.Current.MainWindow.Closing += new CancelEventHandler(OnWindowClosing);
-
-            //#endregion
 
         }
     }

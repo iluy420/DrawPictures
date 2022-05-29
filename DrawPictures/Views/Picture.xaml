@@ -8,9 +8,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Picture">
-    <!--<Page.DataContext>
+    <Page.DataContext>
         <vm:PictureViewModel/>
-    </Page.DataContext>-->
+    </Page.DataContext>
     <!--<Page.CommandBindings>
         <CommandBinding Command="{x:Static local:Picture.MyCommand}" 
                         Executed="Undo_Click"/>
@@ -30,7 +30,7 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto" 
                       VerticalScrollBarVisibility="Auto">
 
-            <InkCanvas>
+            <InkCanvas DefaultDrawingAttributes="{Binding drawingAttributes}">
                 <!--PreviewTouchDown="ink_PreviewTouchDown"  
                        PreviewTouchUp="ink_PreviewTouchUp"                    
                        RenderTransform="{Binding ImageTransform}"-->

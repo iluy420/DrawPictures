@@ -8,6 +8,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="{Binding Title}" 
+
         MinHeight="600"
         MinWidth="800"
         WindowState="Maximized"
@@ -46,11 +47,11 @@
 
         <TabControl Grid.Column="1"
                     Grid.Row="1"
-                    ItemsSource="{Binding Tabs}"
-                    SelectedItem="{Binding TabsCurrent}">
+                    ItemsSource="{Binding Tabs}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding ColorSelectionCommand}"/>
+                    <i:CallMethodAction TargetObject="{Binding}"
+                                        MethodName="OnSelectionTabChanged"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             
@@ -110,14 +111,22 @@
                     Content="Добавить конвас"
                     Command="{Binding AddTabCommand}"/>
             <DockPanel>
-                <Slider Minimum="0" 
+                <Slider Minimum="0.1" 
                         Maximum="20" 
                         Height="30" 
                         Width="155"
                         TickPlacement="Both"
                         TickFrequency="2"
                         IsSelectionRangeEnabled="True" 
-                        VerticalContentAlignment="Center"/>
+                        VerticalContentAlignment="Center"
+                        Value="{Binding drawingAttributes,UpdateSourceTrigger=PropertyChanged }">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:CallMethodAction TargetObject="{Binding}"
+                                                MethodName="OndrawingAttributesChanged"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Slider>
                 <ComboBox>
 
                 </ComboBox>
