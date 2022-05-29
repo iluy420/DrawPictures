@@ -21,9 +21,11 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
-            <i:InvokeCommandAction Command="{Binding CloseApplicationCommand}"/>
+            <i:CallMethodAction  TargetObject="{Binding }" 
+                                 MethodName="OnWindowClosing"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
+
     <!--<Window.InputBindings>
         <KeyBinding Modifiers="Alt" Key="F4" 
                     Command="{Binding AddTabCommand}"/>
@@ -46,18 +48,13 @@
                     Grid.Row="1"
                     ItemsSource="{Binding Tabs}"
                     SelectedItem="{Binding TabsCurrent}">
-            <!--<i:EventTrigger EventName="SelectionChanged">
-                <i:InvokeCommandAction Command="{Binding ColorSelectionCommand}"/>
-            </i:EventTrigger>-->
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding ColorSelectionCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            
 
-
-            <!--<TabControl.Triggers>
-                <EventTrigger >
-
-                </EventTrigger>
-            </TabControl.Triggers>-->
-            <!--"{Binding Path=SelectedItem.Value, ElementName=MyTabControl}"-->
-            <!--TargetNullValue-->
             <TabControl.ItemContainerStyle>
                 <Style TargetType="TabItem">
                     <Setter Property="HeaderTemplate">
@@ -65,7 +62,6 @@
 
                             <DataTemplate>
                                 <DockPanel Width="100">
-                                    <!--<TextBox>вкладка</TextBox>-->
 
                                     <Button Name="btnDelete" 
                                             HorizontalAlignment="Right" 
