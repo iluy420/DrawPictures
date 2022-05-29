@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm ="clr-namespace:DrawPictures.ViewModels"
         xmlns:fa ="http://schemas.fontawesome.com/icons/"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="{Binding Title}" 
         MinHeight="600"
@@ -18,6 +19,11 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CloseApplicationCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <!--<Window.InputBindings>
         <KeyBinding Modifiers="Alt" Key="F4" 
                     Command="{Binding AddTabCommand}"/>
@@ -36,12 +42,15 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-
         <TabControl Grid.Column="1"
                     Grid.Row="1"
                     ItemsSource="{Binding Tabs}"
-                    SelectedItem="{Binding TabsCurrent}"
-                    >
+                    SelectedItem="{Binding TabsCurrent}">
+            <!--<i:EventTrigger EventName="SelectionChanged">
+                <i:InvokeCommandAction Command="{Binding ColorSelectionCommand}"/>
+            </i:EventTrigger>-->
+
+
             <!--<TabControl.Triggers>
                 <EventTrigger >
 

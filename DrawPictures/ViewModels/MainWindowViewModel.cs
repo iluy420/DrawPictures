@@ -103,17 +103,17 @@ namespace DrawPictures.ViewModels
 
         #region CloseApplicationCommand - Закрытие окна
 
-        //public ICommand CloseApplicationCommand { get; }
+        public ICommand CloseApplicationCommand { get; }
 
-        //private void OnCloseApplicationCommandExecute(object p)
-        //{
-        //    if (System.Windows.MessageBox.Show("Вы уверены?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-        //    {
-        //        System.Windows.Application.Current.Shutdown();
-        //    }
-        //}
+        private void OnCloseApplicationCommandExecute(object p)
+        {
+            if (System.Windows.MessageBox.Show("Вы уверены?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
+        }
 
-        //private bool CanCloseApplicationCommandExecuted(object p) => true;
+        private bool CanCloseApplicationCommandExecuted(object p) => true;
 
         #endregion
 
@@ -174,7 +174,7 @@ namespace DrawPictures.ViewModels
         {
             #region Команды
 
-            //CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecute, CanCloseApplicationCommandExecuted);
+            CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecute, CanCloseApplicationCommandExecuted);
             ColorSelectionCommand = new LambdaCommand(OnColorSelectionCommandExecute, CanColorSelectionCommandExecuted);
             AddTabCommand = new LambdaCommand(OnAddTabCommandExecute, CanAddTabCommandExecuted);
             DelTabCommand = new LambdaCommand(OnDelTabCommandExecute, CanDelTabCommandExecuted);
@@ -201,12 +201,12 @@ namespace DrawPictures.ViewModels
             }};
             #endregion
 
-            #region Привязка события закрытия приложения
+            //#region Привязка события закрытия приложения
 
-            if (Application.Current.MainWindow != null)
-                Application.Current.MainWindow.Closing += new CancelEventHandler(OnWindowClosing);
+            //if (Application.Current.MainWindow != null)
+            //    Application.Current.MainWindow.Closing += new CancelEventHandler(OnWindowClosing);
 
-            #endregion
+            //#endregion
 
         }
     }
