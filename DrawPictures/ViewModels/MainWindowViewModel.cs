@@ -8,12 +8,10 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using DrawPictures.Infrastructure.Commands;
 using DrawPictures.ViewModels.Base;
-using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 using TabItem = System.Windows.Controls.TabItem;
 using DialogResult = System.Windows.Forms.DialogResult;
-using static DrawPictures.ViewModels.PictureViewModel;
-using System.Windows.Ink;
+
 
 namespace DrawPictures.ViewModels
 {
@@ -73,7 +71,25 @@ namespace DrawPictures.ViewModels
         }
         #endregion
 
+        #region drawingAttributes : DrawingAttributes - Перо
+
+        /// <summary>Перо</summary>
+        private double _drawingAttributes;
+
+        /// <summary>Перо</summary>
+        public double drawingAttributes
+        {
+            get => _drawingAttributes;
+            set
+            {
+                Set(ref _drawingAttributes, value);
+            }
+
+        }
         #endregion
+
+        #endregion
+
 
         #region Методы
 
@@ -89,97 +105,56 @@ namespace DrawPictures.ViewModels
 
         #endregion
 
-        #region drawingAttributes : DrawingAttributes - Перо
+        #region OnSelectionTabChanged - При смене вкладки
 
-        /// <summary>Перо</summary>
-        private double _drawingAttributes;
-
-        /// <summary>Перо</summary>
-        public double drawingAttributes
-        {
-            get => _drawingAttributes;
-            set
-            {
-                Set(ref _drawingAttributes, value);
-                //запись значения пера
-            }
-
-        }
-        #endregion
-        #endregion
-
-
-        public void OndrawingAttributesChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            foreach (var tab in _Tabs)
-            {
-                if (tab.IsSelected)
-                {
-                    if (tab.Content is Frame)
-                    {
-                        Frame currentFrame = (Frame)tab.Content;
-                        Picture picture = (Picture)currentFrame.Content;
-                        PictureViewModel vm = (PictureViewModel)picture.DataContext;
-                        vm.drawingAttributes.Width = _drawingAttributes;
-                        vm.drawingAttributes.Height = _drawingAttributes;
-                    }
-                }
-
-
-
-            }
-        }
-        
-        #region OnSelectionTabChanged - При выборе элемента
         public void OnSelectionTabChanged(object sender, SelectionChangedEventArgs e)
         {
             foreach (var tab in _Tabs)
             {
                 if (tab.IsSelected)
-                    gg(tab);
+                    CurrentWindowSetting(tab);
+            }
+        }
 
+        #endregion
+
+        #region OndrawingAttributesChanged - При изменении атрибутов размера пера
+
+        public void OndrawingAttributesChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            foreach (var tab in _Tabs)
+            {
+                if (!tab.IsSelected || !(tab.Content is Frame)) continue;
+
+                Frame currentFrame = (Frame)tab.Content;
+                Picture picture = (Picture)currentFrame.Content;
+                PictureViewModel vm = (PictureViewModel)picture.DataContext;
+                vm.drawingAttributes.Width = _drawingAttributes;
+                vm.drawingAttributes.Height = _drawingAttributes;
 
             }
         }
-        private void gg(TabItem tab)
+
+        #endregion
+
+        #region CurrentWindowSetting - Настройка текущего окна
+
+        private void CurrentWindowSetting(TabItem tab)
         {
             if (tab.Content is Frame)
             {
                 Frame currentFrame = (Frame)tab.Content;
                 Picture picture = (Picture)currentFrame.Content;
                 PictureViewModel vm = (PictureViewModel)picture.DataContext;
-                _drawingAttributes = vm.drawingAttributes.Width;
+                //изменение слайдера
+                drawingAttributes = vm.drawingAttributes.Width;
             }
-            
-            //picture.Convas_Return().DefaultDrawingAttributes.Color = Color.FromArgb(colorDialog.Color.A,
-            //colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
         }
 
         #endregion
-        //#region SelectionTabChanged - выбор  вкладки
-        //public ICommand SelectionTabChanged { get; }
+        
+        #endregion
 
-        //private void OnSelectionTabChanged(object p)
-        //{
-        //    foreach (var tab in _Tabs)
-        //    {
-        //        if (tab.IsSelected)
-        //            gg(tab);
-
-
-        //    }
-        //}
-
-        //private bool CanSelectionTabChangedExecuted(object p) => true;
-
-
-        //private void gg(TabItem tab)
-        //{
-        //    Picture picture = (Picture)tab.Content;
-        //    //picture.Convas_Return().DefaultDrawingAttributes.Color = Color.FromArgb(colorDialog.Color.A,
-        //    //colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
-        //}
-        //#endregion
 
         #region Команды
 
@@ -242,7 +217,6 @@ namespace DrawPictures.ViewModels
             ColorSelectionCommand = new LambdaCommand(OnColorSelectionCommandExecute, CanColorSelectionCommandExecuted);
             AddTabCommand = new LambdaCommand(OnAddTabCommandExecute, CanAddTabCommandExecuted);
             DelTabCommand = new LambdaCommand(OnDelTabCommandExecute, CanDelTabCommandExecuted);
-            //SelectionTabChanged = new LambdaCommand(OnSelectionTabChanged, CanSelectionTabChangedExecuted);
 
             #endregion
 
