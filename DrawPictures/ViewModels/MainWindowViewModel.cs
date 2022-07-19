@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -8,9 +9,13 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using DrawPictures.Infrastructure.Commands;
 using DrawPictures.ViewModels.Base;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using MessageBox = System.Windows.MessageBox;
 using TabItem = System.Windows.Controls.TabItem;
 using DialogResult = System.Windows.Forms.DialogResult;
+using TextBox = System.Windows.Controls.TextBox;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace DrawPictures.ViewModels
@@ -82,8 +87,27 @@ namespace DrawPictures.ViewModels
             get => _drawingAttributes;
             set
             {
-                Set(ref _drawingAttributes, value);
+                if (value > 50)//Если введенное значение добльше 50
+                {
+                    value = 50;
+                }
+                Set(ref _drawingAttributes, Math.Round(value, 2));
             }
+
+
+        }
+        #endregion
+
+        #region EditingMode : InkCanvasEditingMode - Режим редактирования inkconvas
+
+        /// <summary>Режим редактирования inkconvas</summary>
+        private InkCanvasEditingMode _EditingMode = new InkCanvas().EditingMode;
+
+        /// <summary>Режим редактирования inkconvas</summary>
+        public InkCanvasEditingMode EditingMode
+        {
+            get => _EditingMode;
+            set => Set(ref _EditingMode, value);
 
         }
         #endregion
@@ -126,15 +150,27 @@ namespace DrawPictures.ViewModels
             {
                 if (!tab.IsSelected || !(tab.Content is Frame)) continue;
 
-                Frame currentFrame = (Frame)tab.Content;
-                Picture picture = (Picture)currentFrame.Content;
-                PictureViewModel vm = (PictureViewModel)picture.DataContext;
-                vm.drawingAttributes.Width = _drawingAttributes;
-                vm.drawingAttributes.Height = _drawingAttributes;
-
+                 Frame currentFrame = (Frame)tab.Content;
+                 Picture picture = (Picture)currentFrame.Content;
+                 PictureViewModel vm = (PictureViewModel)picture.DataContext;
+                 vm.drawingAttributes.Width = _drawingAttributes;
+                 vm.drawingAttributes.Height = _drawingAttributes;
             }
         }
 
+        //обработка ввода
+        public void UIElement_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+           if (!Char.IsDigit(e.Text, 0))
+           {
+               if (e.Text != "." ||((TextBox)sender).Text.Contains("."))
+               {
+                   e.Handled = true;
+               }
+           }
+        }
+
+        //ввод на enter
         #endregion
 
         #region CurrentWindowSetting - Настройка текущего окна
@@ -148,15 +184,43 @@ namespace DrawPictures.ViewModels
                 PictureViewModel vm = (PictureViewModel)picture.DataContext;
                 //изменение слайдера
                 drawingAttributes = vm.drawingAttributes.Width;
+                // изменение режима записи
+                vm.EditingMode = EditingMode;
             }
         }
 
         #endregion
-        
+
         #endregion
 
 
         #region Команды
+
+        #region EraseSelectionCommand - Выбор режима стерки
+
+        public ICommand EraseSelectionCommand { get; }
+
+        private void OnEraseSelectionCommandExecute(object p)
+        {
+            EditingMode = InkCanvasEditingMode.EraseByStroke;
+        }
+
+        private bool CanEraseSelectionCommandExecuted(object p) => true;
+
+        #endregion
+
+        #region InkSelectionCommand - Выбор режима рисования
+
+        public ICommand InkSelectionCommand { get; }
+
+        private void OnInkSelectionCommandExecute(object p)
+        {
+            EditingMode = InkCanvasEditingMode.Ink;
+        }
+
+        private bool CanInkSelectionCommandExecuted(object p) => true;
+
+        #endregion
 
         #region ColorSelectionCommand - Выбор цвета
         public ICommand ColorSelectionCommand { get; }
@@ -164,13 +228,16 @@ namespace DrawPictures.ViewModels
         private void OnColorSelectionCommandExecute(object p)
         {
             ColorDialog colorDialog = new ColorDialog();
-            if (colorDialog.ShowDialog() == DialogResult.OK)
+            if (colorDialog.ShowDialog() != DialogResult.OK) return;
+            foreach (var tab in _Tabs)
             {
-                
-                //Frame currentFrame = (Frame)c;
-                //Picture picture = (Picture)currentFrame.Content;
-                //picture.Convas_Return().DefaultDrawingAttributes.Color = Color.FromArgb(colorDialog.Color.A,
-                //    colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
+                if (!tab.IsSelected || !(tab.Content is Frame)) continue;
+
+                Frame currentFrame = (Frame)tab.Content;
+                Picture picture = (Picture)currentFrame.Content;
+                PictureViewModel vm = (PictureViewModel)picture.DataContext;
+                vm.drawingAttributes.Color = System.Windows.Media.Color.FromArgb(colorDialog.Color.A,
+                    colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
             }
         }
 
@@ -217,7 +284,8 @@ namespace DrawPictures.ViewModels
             ColorSelectionCommand = new LambdaCommand(OnColorSelectionCommandExecute, CanColorSelectionCommandExecuted);
             AddTabCommand = new LambdaCommand(OnAddTabCommandExecute, CanAddTabCommandExecuted);
             DelTabCommand = new LambdaCommand(OnDelTabCommandExecute, CanDelTabCommandExecuted);
-
+            EraseSelectionCommand = new LambdaCommand(OnEraseSelectionCommandExecute, CanEraseSelectionCommandExecuted);
+            InkSelectionCommand = new LambdaCommand(OnInkSelectionCommandExecute, CanInkSelectionCommandExecuted);
             #endregion
 
             #region Установка даты и времени

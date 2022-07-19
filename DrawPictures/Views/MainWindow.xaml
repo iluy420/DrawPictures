@@ -6,6 +6,7 @@
         xmlns:vm ="clr-namespace:DrawPictures.ViewModels"
         xmlns:fa ="http://schemas.fontawesome.com/icons/"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="{Binding Title}" 
 
@@ -112,7 +113,7 @@
                     Command="{Binding AddTabCommand}"/>
             <DockPanel>
                 <Slider Minimum="0.1" 
-                        Maximum="20" 
+                        Maximum="50" 
                         Height="30" 
                         Width="155"
                         TickPlacement="Both"
@@ -127,10 +128,39 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Slider>
-                <ComboBox>
-
-                </ComboBox>
+                <TextBox Text="{Binding drawingAttributes
+                    , UpdateSourceTrigger=LostFocus}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewTextInput">
+                            <i:CallMethodAction TargetObject="{Binding}" 
+                                                MethodName="UIElement_OnPreviewTextInput"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
             </DockPanel>
+
+            <Button x:Name="EraseButton"
+                    Command="{Binding EraseSelectionCommand}">
+                <DockPanel>
+                    <fa:ImageAwesome Icon="Solid_Eraser"
+                                     Height="25">
+                    </fa:ImageAwesome>
+                    <TextBlock Text="Режим стерки"
+                               Margin="10,0,0,0"/>
+                </DockPanel>
+            </Button>
+
+            <Button x:Name="inkButton"
+                    Command="{Binding InkSelectionCommand}">
+                <DockPanel>
+                    <fa:ImageAwesome Icon="Solid_Brush"
+                                     Height="25">
+                    </fa:ImageAwesome>
+                    <TextBlock Text="Режим рисования"
+                               Margin="10,0,0,0"/>
+                </DockPanel>
+            </Button>
+
         </StackPanel>
 
     </Grid>

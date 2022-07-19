@@ -30,7 +30,8 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto" 
                       VerticalScrollBarVisibility="Auto">
 
-            <InkCanvas DefaultDrawingAttributes="{Binding drawingAttributes}">
+            <InkCanvas DefaultDrawingAttributes="{Binding drawingAttributes}"
+                       EditingMode="{Binding EditingMode}">
                 <!--PreviewTouchDown="ink_PreviewTouchDown"  
                        PreviewTouchUp="ink_PreviewTouchUp"                    
                        RenderTransform="{Binding ImageTransform}"-->

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Ink;
+using System.Windows.Media;
 using DrawPictures.ViewModels.Base;
 
 namespace DrawPictures.ViewModels
@@ -36,7 +37,26 @@ namespace DrawPictures.ViewModels
                 //запись значения пера
                 _CurrentInkCanvas.DefaultDrawingAttributes = _drawingAttributes;
             }
-            
+
+        }
+        #endregion
+
+        #region EditingMode : InkCanvasEditingMode - Режим редактирования inkconvas
+
+        /// <summary>Режим редактирования inkconvas</summary>
+        private InkCanvasEditingMode _EditingMode = new InkCanvas().EditingMode;
+
+        /// <summary>Режим редактирования inkconvas</summary>
+        public InkCanvasEditingMode EditingMode
+        {
+            get => _EditingMode;
+            set
+            {
+                Set(ref _EditingMode, value);
+                //запись значения режима редактирования
+                _CurrentInkCanvas.EditingMode = _EditingMode;
+            }
+
         }
         #endregion
 
